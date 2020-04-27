@@ -1,0 +1,28 @@
+{
+  "name": "covidtracker",
+  "version": "1.0.0",
+  "description": "Tracker for covid-19 cases",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mateustizotti/covidTracker.git"
+  },
+  "keywords": [
+    "Covid-19",
+    "Corona",
+    "Virus"
+  ],
+  "author": "Mateus Tizotti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mateustizotti/covidTracker/issues"
+  },
+  "homepage": "https://github.com/mateustizotti/covidTracker#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.3"
+  }
+}
