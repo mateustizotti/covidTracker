@@ -1,23 +1,79 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=Edge'>
     <title>Corona Virus Tracker</title>
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
     <meta name='viewport' content='width=device-width, inital-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css'>
+    <link rel='stylesheet' type='text/css' media='screen'
+        href='https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
     <script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
     <script defer src='script.js'></script>
 </head>
 
-<body>
+<body class="body">
     <header class="title">
-        <h1>Corona Virus Tracker</h1>
+        <img src="./img/image.png" style="width: 15%;"/>
     </header>
-    <div id="map">
-        <canvas id="myChart"></canvas>
+    <div id="container">
+        <div class="card">
+            <div class="additional-confirmed">
+                <div class="user-card">
+                    <div class="level center"></div>
+                    <div class="points center"></div>
+                </div>
+                <div class="more-info">
+                    <div class="stats"></div>
+                </div>
+            </div>
+            <div class="general">
+                <p style="color: grey;">Confirmed Cases</p>
+                <h5 id = "conf">0</h5>
+                <p>Active cases of COVID-19</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="additional-recoveries">
+                <div class="user-card">
+                    <div class="level center"></div>
+                    <div class="points center"></div>
+                </div>
+                <div class="more-info">
+                    <div class="stats"></div>
+                </div>
+            </div>
+            <div class="general">
+                <p style="color: grey;">Recovered</p>
+                <h5 id = "rec">0</h5>
+                <p>Recoveries from COVID-19</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="additional-deaths">
+                <div class="user-card">
+                    <div class="level center"></div>
+                    <div class="points center"></div>
+                </div>
+                <div class="more-info">
+                    <div class="stats"></div>
+                </div>
+            </div>
+            <div class="general">
+                <p style="color: grey;">Deaths</p>
+                <h5 id ="deaths">0</h5>
+                <p>Deaths caused by COVID-19</p>
+            </div>
+        </div>
     </div>
+        <div id="map">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div id="copy">
+            <a>&copy;Mateus Tizotti</a>
+        </div>
 </body>
 
 </html>

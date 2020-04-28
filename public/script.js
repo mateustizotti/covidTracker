@@ -1,58 +1,95 @@
 const url = 'https://covid19.mathdro.id/api';
-const cases = [];
 
 chartIt();
+cardIt();
 
-async function getData() {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
+async function getDataChart() {
+    const dates = [];
+    const dailyConfirmed = [];
+    const dailyDeaths = [];
 
-    const confirmed = data.confirmed.value;
-    const recovered = data.recovered.value;
-    const deaths = data.deaths.value;
+    const responseDaily = await fetch(`${url}/daily`);
+    const dataDaily = await responseDaily.json();
 
-    console.log(confirmed, recovered, deaths);
 
-    cases.push(confirmed);
-    cases.push(recovered);
-    cases.push(deaths);
+    for (let i = 0; i < dataDaily.length; i++) {
+        dates.push(dataDaily[i].reportDate);
+        dailyConfirmed.push(dataDaily[i].confirmed.total);
+        dailyDeaths.push(dataDaily[i].deaths.total);
+    }
+
+    return {
+        dates,
+        dailyConfirmed,
+        dailyDeaths
+    };
 };
 
+async function getDataCards() {
+    const cases = [];
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const totalConfirmed = data.confirmed.value;
+    const totalRecovered = data.recovered.value;
+    const totalDeaths = data.deaths.value;
+    cases.push(totalConfirmed);
+    cases.push(totalRecovered);
+    cases.push(totalDeaths);
+
+    return cases;
+};
+
+async function cardIt() {
+    const data = await getDataCards();
+
+    for (let i = 0; i < data.length; i++) {
+        if (i == 0) {
+            let el = document.getElementById('conf')
+            el.textContent = data[i];
+        } else if (i == 1) {
+            let el = document.getElementById('rec')
+            el.textContent = data[i];
+        } else if (i == 2) {
+            let el = document.getElementById('deaths')
+            el.textContent = data[i];
+        }
+    }
+
+}
+
 async function chartIt() {
-    await getData();
+    const data = await getDataChart();
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: ['Confirmed', 'Recovered', 'Deaths'],
+            labels: data.dates,
             datasets: [{
-                label: 'Confirmed',
-                data: cases,
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            },
-            {
-                label: 'Recovered',
-                data: cases,
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                ],
-                borderWidth: 1
-            }]
+                    label: 'Confirmed',
+                    data: data.dailyConfirmed,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                },
+                {
+                    label: 'Deaths',
+                    data: data.dailyDeaths,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }
+            ]
         },
-        
+
     });
-}
+};
