@@ -1,4 +1,18 @@
 const url = 'https://covid19.mathdro.id/api';
+const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ]
 
 chartIt();
 cardIt();
@@ -13,7 +27,11 @@ async function getDataChart() {
 
 
     for (let i = 0; i < dataDaily.length; i++) {
-        dates.push(dataDaily[i].reportDate);
+        let date = new Date(dataDaily[i].reportDate);
+        let monthName = months[date.getMonth()];
+        let day = date.getDate();
+        let finalDate = `${monthName} ${day}`;
+        dates.push(finalDate);
         dailyConfirmed.push(dataDaily[i].confirmed.total);
         dailyDeaths.push(dataDaily[i].deaths.total);
     }
@@ -35,6 +53,12 @@ async function getDataCards() {
     const totalRecovered = data.recovered.value;
     const totalDeaths = data.deaths.value;
     const updated = data.lastUpdate;
+
+    const percRec = (totalRecovered * 100)/totalConfirmed;
+    document.getElementById('recPerc').textContent = percRec.toFixed(2);
+    
+    const percDeath = (totalDeaths * 100)/totalConfirmed;
+    document.getElementById('deathPerc').textContent = percDeath.toFixed(2);
     
     document.getElementById('updatedConf').textContent = new Date(updated).toDateString();
     document.getElementById('updatedRec').textContent = new Date(updated).toDateString();
