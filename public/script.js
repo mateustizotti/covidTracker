@@ -12,7 +12,7 @@ const months = [
     'Oct',
     'Nov',
     'Dec'
-  ]
+]
 
 chartIt();
 cardIt();
@@ -31,6 +31,7 @@ async function getDataChart() {
         let monthName = months[date.getMonth()];
         let day = date.getDate();
         let finalDate = `${monthName} ${day}`;
+
         dates.push(finalDate);
         dailyConfirmed.push(dataDaily[i].confirmed.total);
         dailyDeaths.push(dataDaily[i].deaths.total);
@@ -49,17 +50,24 @@ async function getDataCards() {
     const response = await fetch(url);
     const data = await response.json();
 
+    const responseDay = await fetch(`${url}/daily`);
+    const dataDay = await responseDay.json();
+
     const totalConfirmed = data.confirmed.value;
     const totalRecovered = data.recovered.value;
     const totalDeaths = data.deaths.value;
     const updated = data.lastUpdate;
 
-    const percRec = (totalRecovered * 100)/totalConfirmed;
+    const percRec = (totalRecovered * 100) / totalConfirmed;
     document.getElementById('recPerc').textContent = percRec.toFixed(2);
-    
-    const percDeath = (totalDeaths * 100)/totalConfirmed;
+
+    const percDeath = (totalDeaths * 100) / totalConfirmed;
     document.getElementById('deathPerc').textContent = percDeath.toFixed(2);
-    
+
+    const outsideChina = dataDay[dataDay.length - 1].confirmed.outsideChina;
+    const percOutChina = (outsideChina * 100) / totalConfirmed;
+    document.getElementById('outChina').textContent = percOutChina.toFixed(2);
+
     document.getElementById('updatedConf').textContent = new Date(updated).toDateString();
     document.getElementById('updatedRec').textContent = new Date(updated).toDateString();
     document.getElementById('updatedDeaths').textContent = new Date(updated).toDateString();
