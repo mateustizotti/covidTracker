@@ -34,6 +34,12 @@ async function getDataCards() {
     const totalConfirmed = data.confirmed.value;
     const totalRecovered = data.recovered.value;
     const totalDeaths = data.deaths.value;
+    const updated = data.lastUpdate;
+    
+    document.getElementById('updatedConf').textContent = new Date(updated).toDateString();
+    document.getElementById('updatedRec').textContent = new Date(updated).toDateString();
+    document.getElementById('updatedDeaths').textContent = new Date(updated).toDateString();
+
     cases.push(totalConfirmed);
     cases.push(totalRecovered);
     cases.push(totalDeaths);
@@ -69,27 +75,18 @@ async function chartIt() {
             datasets: [{
                     label: 'Confirmed',
                     data: data.dailyConfirmed,
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)'
-                    ],
+                    backgroundColor: 'rgba(54, 162, 235, 0.3)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 },
                 {
                     label: 'Deaths',
                     data: data.dailyDeaths,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)'
-                    ],
+                    backgroundColor: 'rgba(255, 99, 132, 0.3)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
                 }
             ]
         },
-
     });
 };
