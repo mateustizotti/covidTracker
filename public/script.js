@@ -18,9 +18,7 @@ var dates = [];
 var dailyConfirmed = [];
 var dailyDeaths = [];
 var cases = [];
-var countryConfirmed = [];
-var countryRecovered = [];
-var countryDeaths = [];
+var countryNumbers = [];
 var countryUpdated = [];
 
 globalChartData = {
@@ -61,32 +59,6 @@ dummyData = {
     ]
 }
 
-countryChartData = {
-    labels: ['Confirmed', 'Recovered', 'Deaths'],
-    datasets: [{
-            label: 'Confirmed',
-            data: [countryConfirmed],
-            backgroundColor: 'rgba(54, 162, 235, 0.3)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        },
-        {
-            label: 'Recovered',
-            data: [countryRecovered],
-            backgroundColor: 'rgba(54, 162, 235, 0.3)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        },
-        {
-            label: 'Deaths',
-            data: [countryDeaths],
-            backgroundColor: 'rgba(255, 99, 132, 0.3)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-        }
-    ]
-}
-
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
@@ -100,7 +72,9 @@ getDataPicker();
 async function getDataChart() {
     const responseDaily = await fetch(`${url}/daily`);
     const dataDaily = await responseDaily.json();
-    console.log(dataDaily);
+    if (dates.length > 0) {
+        dates = [];
+    }
     for (let i = 0; i < dataDaily.length; i++) {
         let date = new Date(dataDaily[i].reportDate);
         let monthName = months[date.getMonth()];
@@ -180,12 +154,29 @@ async function chartIt(countryData) {
         myChart.destroy();
         myChart = new Chart(ctx, {
             type: 'bar',
-            data: countryChartData
-        });
+            data: {
+                labels: ['Confirmed', 'Recovered', 'Deaths'],
+                datasets: [{
+                    label: [],
+                    data: countryNumbers,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.3)',
+                        'rgba(75, 192, 192, 0.3)',
+                        'rgba(255, 99, 132, 0.3)'
+                    ],
 
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
     } else {
-        await getDataChart();
         myChart.destroy();
+        await getDataChart();
         myChart = new Chart(ctx, {
             type: 'line',
             data: globalChartData
@@ -200,23 +191,19 @@ async function changeCountry() {
         const response = await fetch(`${url}/countries/${value}`);
         const data = await response.json();
 
-        const countryConfirmed = [];
-        const countryRecovered = [];
-        const countryDeaths = [];
-
-        countryConfirmed.push(data.confirmed.value);
-        countryRecovered.push(data.recovered.value);
-        countryDeaths.push(data.deaths.value);
-        const countryUpdated = new Date(data.lastUpdate).toDateString();
-
-        const countryData = {
-            countryConfirmed,
-            countryRecovered,
-            countryDeaths,
-            countryUpdated
+        if (countryNumbers.length > 0) {
+            countryNumbers = [];
         }
 
-        updateCards(countryData);
+        countryNumbers.push(data.confirmed.value);
+        countryNumbers.push(data.recovered.value);
+        countryNumbers.push(data.deaths.value);
+
+        const countryData = {
+            countryNumbers
+        }
+
+        updateCards();
         chartIt(countryData);
     } else {
         chartIt();
@@ -225,11 +212,10 @@ async function changeCountry() {
 
 }
 
-function updateCards(countryData) {
-    const confirmed = countryData.countryConfirmed;
-    const recovered = countryData.countryRecovered;
-    const deaths = countryData.countryDeaths;
-    const updated = countryData.countryUpdated;
+function updateCards() {
+    const confirmed = countryNumbers[0];
+    const recovered = countryNumbers[1];
+    const deaths = countryNumbers[2];
 
     let percRec = (recovered * 100) / confirmed;
     document.getElementById('recPerc').textContent = percRec.toFixed(2);
@@ -240,10 +226,4 @@ function updateCards(countryData) {
     document.getElementById('conf').textContent = confirmed;
     document.getElementById('rec').textContent = recovered;
     document.getElementById('deaths').textContent = deaths;
-
-    document.getElementById('updatedConf', 'updatedRec', 'updatedDeaths').textContent = updated;
-}
-
-function updateChart(countryData) {
-
 }
