@@ -172,7 +172,8 @@ async function chartIt(countryData) {
                     ],
                     borderWidth: 1
                 }]
-            }
+            },
+            options: { legend: { display: false } }
         });
     } else {
         myChart.destroy();
