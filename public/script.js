@@ -13,7 +13,8 @@ const months = [
     'Nov',
     'Dec'
 ];
-
+const countries = [];
+const confirmedRank = [];
 var dates = [];
 var dailyConfirmed = [];
 var dailyDeaths = [];
@@ -68,6 +69,7 @@ var myChart = new Chart(ctx, {
 chartIt();
 cardIt();
 getDataPicker();
+populateRanks()
 
 async function getDataChart() {
     const responseDaily = await fetch(`${url}/daily`);
@@ -173,7 +175,11 @@ async function chartIt(countryData) {
                     borderWidth: 1
                 }]
             },
-            options: { legend: { display: false } }
+            options: {
+                legend: {
+                    display: false
+                }
+            }
         });
     } else {
         myChart.destroy();
@@ -227,4 +233,53 @@ function updateCards() {
     document.getElementById('conf').textContent = confirmed;
     document.getElementById('rec').textContent = recovered;
     document.getElementById('deaths').textContent = deaths;
+}
+
+function compare(a, b) {
+    const valueA = a.confirmed;
+    const valueB = b.confirmed;
+
+    let comparison = 0;
+    if (valueA > valueB) {
+        comparison = 1
+    } else if (valueA < valueB) {
+        comparison = -1;
+      }
+      return comparison;
+  }
+
+async function getDataRank() {
+    const response = await fetch(`${url}/countries/`);
+    const data = await response.json();
+
+    for (let i = 0; i < data.countries.length; i++) {
+        countries.push(data.countries[i].name);
+    }
+
+    for (let i = 0; i < countries.length; i++) {
+        let name = countries[i];
+        try {
+            let response = await fetch(`${url}/countries/${name}`);
+            let data = await response.json();
+            confirmedRank.push({
+                'country': name,
+                'confirmed': data.confirmed.value
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    confirmedRank.sort(compare);
+    confirmedRank.reverse();
+    console.log(confirmedRank);
+}
+
+async function populateRanks() {
+    await getDataRank();
+
+    for (let i = 0; i < 5; i++) {
+        document.getElementById(`${i+1}countryConfirmedName`).textContent = confirmedRank[i].country;
+        document.getElementById(`${i+1}confirmedValue`).textContent = confirmedRank[i].confirmed;
+    }
 }

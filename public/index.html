@@ -16,7 +16,7 @@
 
 <body class="body">
     <header class="title">
-        <img src="./img/image.png" style="width: 15%;"/>
+        <img src="./img/image.png" style="width: 15%;" />
     </header>
     <div id="container">
         <div class="card">
@@ -31,8 +31,9 @@
             </div>
             <div class="general">
                 <p style="color: grey;">Confirmed Cases</p>
-                <h5 id = "conf">0</h5>
-                <p id = "percentage" style="color: grey; font-size:smaller"><span id = "outChina">00.00</span>% Outside China</p>
+                <h5 id="conf">0</h5>
+                <p id="percentage" style="color: grey; font-size:smaller"><span id="outChina">00.00</span>% Outside
+                    China</p>
                 <p style="color: grey; font-size:small">
                     Last Updated: <span id="updatedConf"></span>
                 </p>
@@ -51,12 +52,13 @@
             </div>
             <div class="general">
                 <p style="color: grey;">Recovered</p>
-                <h5 id = "rec">0</h5>
-                <p id = "percentage" style="color: grey; font-size:smaller"><span id = "recPerc">00.00</span>% Recovery Rate</p>
+                <h5 id="rec">0</h5>
+                <p id="percentage" style="color: grey; font-size:smaller"><span id="recPerc">00.00</span>% Recovery Rate
+                </p>
                 <p style="color: grey; font-size:small">
                     Last Updated: <span id="updatedRec"></span>
                 </p>
-                <p class = "sample">Recoveries from COVID-19</p>
+                <p class="sample">Recoveries from COVID-19</p>
             </div>
         </div>
         <div class="card">
@@ -71,27 +73,138 @@
             </div>
             <div class="general">
                 <p style="color: grey;">Deaths</p>
-                <h5 id ="deaths">0</h5>
-                <p id = "percentage" style="color: grey; font-size:smaller"><span id = "deathPerc">00.00</span>% Fatality Rate</p>
+                <h5 id="deaths">0</h5>
+                <p id="percentage" style="color: grey; font-size:smaller"><span id="deathPerc">00.00</span>% Fatality
+                    Rate</p>
                 <p style="color: grey; font-size:small">
                     Last Updated: <span id="updatedDeaths"></span>
                 </p>
-                <p class = "sample">Deaths caused by COVID-19</p>
+                <p class="sample">Deaths caused by COVID-19</p>
             </div>
         </div>
     </div>
     <br>
-    <div id = "pickerDiv">
-        <select id = "picker" onchange="changeCountry()"> 
+    <div id="pickerDiv">
+        <select id="picker" onchange="changeCountry()">
             <option value="global" selected>Global</option>
         </select>
     </div>
-        <div id="map">
-            <canvas id="myChart"></canvas>
-        </div>
-        <div id="copy">
-            <a>&copy;Mateus Tizotti</a>
-        </div>
+    <div id="map">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Country</th>
+                    <th>Confirmed Cases</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#1</td>
+                    <td id="1countryConfirmedName"></td>
+                    <td id="1confirmedValue"></td>
+                </tr>
+                <tr>
+                    <td>#2</td>
+                    <td id="2countryConfirmedName"></td>
+                    <td id="2confirmedValue"></td>
+                </tr>
+                <tr>
+                    <td>#3</td>
+                    <td id="3countryConfirmedName"></td>
+                    <td id="3confirmedValue"></td>
+                </tr>
+                <tr>
+                    <td>#4</td>
+                    <td id="4countryConfirmedName"></td>
+                    <td id="4confirmedValue"></td>
+                </tr>
+                <tr>
+                    <td>#5</td>
+                    <td id="5countryConfirmedName"></td>
+                    <td id="5confirmedValue"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Country</th>
+                    <th>Recoveries</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#1</td>
+                    <td id="1countryRecoveredName"></td>
+                    <td id="1recoveredValue"></td>
+                </tr>
+                <tr>
+                    <td>#2</td>
+                    <td id="2countryRecoveredName"></td>
+                    <td id="2recoveredValue"></td>
+                </tr>
+                <tr>
+                    <td>#3</td>
+                    <td id="3countryRecoveredName"></td>
+                    <td id="3recoveredValue"></td>
+                </tr>
+                <tr>
+                    <td>#4</td>
+                    <td id="4countryRecoveredName"></td>
+                    <td id="4recoveredValue"></td>
+                </tr>
+                <tr>
+                    <td>#5</td>
+                    <td id="5countryRecoveredName"></td>
+                    <td id="5recoveredValue"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Country</th>
+                    <th>Deaths</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#1</td>
+                    <td id="1countryDeathsName"></td>
+                    <td id="1deathsValue"></td>
+                </tr>
+                <tr>
+                    <td>#2</td>
+                    <td id="2countryDeathsName"></td>
+                    <td id="2deathsValue"></td>
+                </tr>
+                <tr>
+                    <td>#3</td>
+                    <td id="3countryDeathsName"></td>
+                    <td id="3deathsValue"></td>
+                </tr>
+                <tr>
+                    <td>#4</td>
+                    <td id="4countryDeathsName"></td>
+                    <td id="4deathsValue"></td>
+                </tr>
+                <tr>
+                    <td>#5</td>
+                    <td id="5countryDeathsName"></td>
+                    <td id="5deathsValue"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="copy">
+        <a>&copy;Mateus Tizotti</a>
+    </div>
 </body>
 
 </html>
