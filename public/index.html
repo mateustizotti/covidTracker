@@ -9,6 +9,7 @@
     <meta name='viewport' content='width=device-width, inital-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen'
         href='https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css'>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css">
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
     <script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
     <script defer src='script.js'></script>
@@ -92,9 +93,17 @@
     <div id="map">
         <canvas id="myChart"></canvas>
     </div>
-    <div class="container">
+    <br>
+    <h5 style="padding-left: 45%">Global Ranks</h5>
+    <div id="spinner" class="loader">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+    </div>
+
+    <div id="table" class="container">
         <table>
-            <thead>
+            <thead class="">
                 <tr>
                     <th>Rank</th>
                     <th>Country</th>
@@ -130,7 +139,7 @@
             </tbody>
         </table>
         <table>
-            <thead>
+            <thead class="green">
                 <tr>
                     <th>Rank</th>
                     <th>Country</th>
@@ -166,7 +175,7 @@
             </tbody>
         </table>
         <table>
-            <thead>
+            <thead class="red">
                 <tr>
                     <th>Rank</th>
                     <th>Country</th>

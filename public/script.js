@@ -15,6 +15,8 @@ const months = [
 ];
 const countries = [];
 const confirmedRank = [];
+const recoveredRank = [];
+const deathsRank = [];
 var dates = [];
 var dailyConfirmed = [];
 var dailyDeaths = [];
@@ -235,7 +237,7 @@ function updateCards() {
     document.getElementById('deaths').textContent = deaths;
 }
 
-function compare(a, b) {
+function compareConfirmed(a, b) {
     const valueA = a.confirmed;
     const valueB = b.confirmed;
 
@@ -244,9 +246,35 @@ function compare(a, b) {
         comparison = 1
     } else if (valueA < valueB) {
         comparison = -1;
-      }
-      return comparison;
-  }
+    }
+    return comparison;
+}
+
+function compareRecovered(a, b) {
+    const valueA = a.recovered;
+    const valueB = b.recovered;
+
+    let comparison = 0;
+    if (valueA > valueB) {
+        comparison = 1
+    } else if (valueA < valueB) {
+        comparison = -1;
+    }
+    return comparison;
+}
+
+function compareDeaths(a, b) {
+    const valueA = a.deaths;
+    const valueB = b.deaths;
+
+    let comparison = 0;
+    if (valueA > valueB) {
+        comparison = 1
+    } else if (valueA < valueB) {
+        comparison = -1;
+    }
+    return comparison;
+}
 
 async function getDataRank() {
     const response = await fetch(`${url}/countries/`);
@@ -265,14 +293,25 @@ async function getDataRank() {
                 'country': name,
                 'confirmed': data.confirmed.value
             });
+            recoveredRank.push({
+                'country': name,
+                'recovered': data.recovered.value
+            });
+            deathsRank.push({
+                'country': name,
+                'deaths': data.deaths.value
+            });
         } catch (error) {
             console.error(error);
         }
     }
 
-    confirmedRank.sort(compare);
+    confirmedRank.sort(compareConfirmed);
     confirmedRank.reverse();
-    console.log(confirmedRank);
+    recoveredRank.sort(compareRecovered);
+    recoveredRank.reverse();
+    deathsRank.sort(compareDeaths);
+    deathsRank.reverse();
 }
 
 async function populateRanks() {
@@ -281,5 +320,13 @@ async function populateRanks() {
     for (let i = 0; i < 5; i++) {
         document.getElementById(`${i+1}countryConfirmedName`).textContent = confirmedRank[i].country;
         document.getElementById(`${i+1}confirmedValue`).textContent = confirmedRank[i].confirmed;
+
+        document.getElementById(`${i+1}countryRecoveredName`).textContent = recoveredRank[i].country;
+        document.getElementById(`${i+1}recoveredValue`).textContent = recoveredRank[i].recovered;
+
+        document.getElementById(`${i+1}countryDeathsName`).textContent = deathsRank[i].country;
+        document.getElementById(`${i+1}deathsValue`).textContent = deathsRank[i].deaths;
     }
+    document.getElementById("spinner").style.display = "none";
+    document.getElementById("table").style.display = "flex";
 }
