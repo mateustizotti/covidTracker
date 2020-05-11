@@ -287,20 +287,25 @@ async function getDataRank() {
     for (let i = 0; i < countries.length; i++) {
         let name = countries[i];
         try {
-            let response = await fetch(`${url}/countries/${name}`);
-            let data = await response.json();
-            confirmedRank.push({
-                'country': name,
-                'confirmed': data.confirmed.value
-            });
-            recoveredRank.push({
-                'country': name,
-                'recovered': data.recovered.value
-            });
-            deathsRank.push({
-                'country': name,
-                'deaths': data.deaths.value
-            });
+            if (name != "Cote d'Ivoire") {
+                let response = await fetch(`${url}/countries/${name}`);
+                let data = await response.json();
+                let percReco = (data.recovered.value * 100) / data.confirmed.value;
+                let deathRate = (data.deaths.value * 100) / data.confirmed.value;
+                parseFloat(deathRate);
+                confirmedRank.push({
+                    'country': name,
+                    'confirmed': data.confirmed.value
+                });
+                recoveredRank.push({
+                    'country': name,
+                    'recovered': percReco
+                });
+                deathsRank.push({
+                    'country': name,
+                    'deaths': deathRate
+                });
+            }
         } catch (error) {
             console.error(error);
         }
@@ -322,10 +327,10 @@ async function populateRanks() {
         document.getElementById(`${i+1}confirmedValue`).textContent = confirmedRank[i].confirmed;
 
         document.getElementById(`${i+1}countryRecoveredName`).textContent = recoveredRank[i].country;
-        document.getElementById(`${i+1}recoveredValue`).textContent = recoveredRank[i].recovered;
+        document.getElementById(`${i+1}recoveredValue`).textContent = `${recoveredRank[i].recovered.toFixed(2)}%`;
 
         document.getElementById(`${i+1}countryDeathsName`).textContent = deathsRank[i].country;
-        document.getElementById(`${i+1}deathsValue`).textContent = deathsRank[i].deaths;
+        document.getElementById(`${i+1}deathsValue`).textContent = `${deathsRank[i].deaths.toFixed(2)}%`;
     }
     document.getElementById("spinner").style.display = "none";
     document.getElementById("table").style.display = "flex";

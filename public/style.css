@@ -119,26 +119,6 @@
   padding-top: 0;
 }
 
-td {
-  text-align: center;
-  padding: 15px;
-}
-
-th {
-  text-align: center;
-  align-items: center;
-  padding: 15px;
-}
-
-
-table {
-  margin: 20px;
-}
-
-#table {
-  display: none;
-}
-
 #spinner {
   display: flex;
 }
@@ -212,6 +192,39 @@ table {
   }
 }
 
+td {
+  text-align: center;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+th {
+  text-align: center;
+  padding: 1%;
+}
+
+
+table {
+  margin: 2%;
+  min-width: 30%;
+  background-color: #fff;
+  background: linear-gradient(#f8f8f8, #fff);
+  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#table {
+  display: none;
+}
+
 .blue {
   background-color: rgba(54, 163, 235, 0.801);
+  
+}
+.green {
+  background-color: rgba(54, 235, 63, 0.801);
+}
+.red {
+  background-color: rgba(235, 54, 54, 0.801);
 }
