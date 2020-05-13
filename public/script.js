@@ -333,5 +333,5 @@ async function populateRanks() {
         document.getElementById(`${i+1}deathsValue`).textContent = `${deathsRank[i].deaths.toFixed(2)}%`;
     }
     document.getElementById("spinner").style.display = "none";
-    document.getElementById("table").style.display = "flex";
+    document.getElementById("table").style.display = "grid";
 }
