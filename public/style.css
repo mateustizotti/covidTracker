@@ -68,8 +68,11 @@
 
 #picker {
   border-color: grey;
-  text-indent: 42%;
   font-size: small;
+}
+
+#pickerDiv select {
+  text-align: center;
 }
 
 #pickerDiv {
@@ -188,7 +191,7 @@ th {
 table {
   font-family: sans-serif;
   margin: 5%;
-  min-width: 30%;
+  width: 90%;
   background-color: #fff;
   background: linear-gradient(#f8f8f8, #fff);
   box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
